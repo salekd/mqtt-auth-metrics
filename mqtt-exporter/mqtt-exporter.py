@@ -11,6 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+__author__ = "David Salek"
+__copyright__ = "Copyright 2020, SURFsara"
+__license__ = "Apache License, Version 2.0"
+__email__ = "david.salek@surfsara.nl"
 
 import logging
 from configparser import ConfigParser
