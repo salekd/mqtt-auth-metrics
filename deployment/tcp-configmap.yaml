@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-services
+  namespace: ingress-nginx
+data:
+  # TCP ingresses
+  9998: "default/postgresql:5432"
+  9999: "default/mosquitto:1883"

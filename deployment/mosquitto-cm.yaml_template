@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto
+  namespace: default
+data:
+  mosquitto.conf: |-
+    pid_file /var/run/mosquitto.pid
+
+    persistence false
+    #persistence_location /mosquitto/data
+
+    #log_dest file /mosquitto/log/mosquitto.log
+    log_dest stdout
+    log_type all
+
+    sys_interval 10
+
+    acl_file /etc/mosquitto/aclfile
+    password_file /etc/mosquitto/pwfile
+
+    allow_anonymous false
+
+    auth_plugin /build/mosquitto-auth-plug/auth-plug.so
+    auth_opt_backends postgres
+    #auth_opt_host postgresql.default.svc.cluster.local 
+    #auth_opt_port 5432
+    auth_opt_host postgresql.{{CLUSTER}}
+    auth_opt_port 9998
+    auth_opt_dbname mosquitto-auth
+    auth_opt_user postgres
+    auth_opt_pass admin1234
+    auth_opt_userquery SELECT pw FROM account WHERE username = $1 limit 1
+    auth_opt_superquery SELECT COALESCE(COUNT(*),0) FROM account WHERE username = $1 AND super = 1
+    auth_opt_aclquery SELECT topic FROM acls WHERE (username = $1) AND (rw & $2) > 0
+  aclfile: |-
+    # This affects access control for clients with no username.
+    topic read $SYS/#
+
+    # This only affects clients with username "admin".
+    user admin
+    topic read #
+    topic read $SYS/#
+    topic write #
+
+    # This affects all clients.
+    pattern write $SYS/broker/connection/%c/state
+  pwfile: |-
+    admin:{{PASSWORD}}
