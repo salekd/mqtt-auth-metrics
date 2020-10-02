@@ -2,28 +2,27 @@
 
 https://github.com/jpmens/mosquitto-auth-plug
 
-```
-# Cluster domain name
-export CLUSTER=
-# Admin password
-export PASSWORD=
-
-# Install mustache templates.
-# https://mustache.github.io/
-#curl -sSL https://git.io/get-mo -o mo
-#chmod +x mo
-#mv mo /usr/local/bin/
-
-mo mosquitto.conf_template > mosquitto.conf
-```
+https://www.eclipse.org/lists/mosquitto-dev/msg02305.html
 
 ```
 export DOCKER_ID_USER="salekd"
 docker login https://index.docker.io/v1/
 
-docker build . -f ./Dockerfile -t mosquitto-auth --no-cache
-docker tag mosquitto-auth $DOCKER_ID_USER/mosquitto-auth:0.0.2
-docker push $DOCKER_ID_USER/mosquitto-auth:0.0.2
+# docker build . -t mosquitto-auth --no-cache
+docker build . -t mosquitto-auth
+docker tag mosquitto-auth $DOCKER_ID_USER/mosquitto-auth:0.1.0
+docker push $DOCKER_ID_USER/mosquitto-auth:0.1.0
+```
+
+## Shared subscriptions
+
+```
+docker run -p 1883:1883 mosquitto-auth
+
+mosquitto_sub -t '$share/group1/test' -i client1
+mosquitto_sub -t '$share/group1/test' -i client2
+
+mosquitto_pub -t test -m 42
 ```
 
 ## Build mosquitto and mosquito-auth-plug in Ubuntu
