@@ -17,7 +17,7 @@ spec:
 
       # Mosquitto broker
       - name: mosquitto
-        image: salekd/mosquitto-auth:0.0.2
+        image: salekd/mosquitto-auth:0.1.0
         imagePullPolicy: Always
         resources:
           requests:
