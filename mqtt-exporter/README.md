@@ -5,8 +5,8 @@ export DOCKER_ID_USER="salekd"
 docker login https://index.docker.io/v1/
 
 docker build . -f ./Dockerfile -t mqtt-exporter --no-cache
-docker tag mqtt-exporter $DOCKER_ID_USER/mqtt-exporter:1.2.0
-docker push $DOCKER_ID_USER/mqtt-exporter:1.2.0
+docker tag mqtt-exporter $DOCKER_ID_USER/mqtt-exporter:1.2.1
+docker push $DOCKER_ID_USER/mqtt-exporter:1.2.1
 ```
 
 ```

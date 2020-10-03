@@ -32,10 +32,7 @@ mqtt_port = config.getint('MQTT', 'port')
 mqtt_user = config.get('MQTT', 'user')
 mqtt_password = config.get('MQTT', 'password')
 # Certificate is optional (only when TLS is required).
-if config.has_option('MQTT', 'cert'):
-    mqtt_cert = config.get('MQTT', 'cert')
-else:
-    mqtt_cert = None
+mqtt_cert = config.get('MQTT', 'cert', fallback=None)
 mqtt_topics = config.get('MQTT', 'topics').split(',')
 
 level_dict = {
@@ -133,7 +130,7 @@ if __name__ == '__main__':
 
     mqttc.message_callback_add("#", on_message_topic)
     mqttc.message_callback_add("$SYS/#", on_message_sys)
-    #mqttc.on_message = on_message
+    # mqttc.on_message = on_message
     mqttc.on_connect = on_connect
     mqttc.on_publish = on_publish
     mqttc.on_subscribe = on_subscribe
