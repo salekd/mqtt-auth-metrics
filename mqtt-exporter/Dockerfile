@@ -15,10 +15,11 @@
 FROM python:3.6.5-alpine3.7
 
 ADD requirements.txt /
-ADD mqtt-exporter.py /
-ADD mqtt-exporter.cfg /
 
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
+
+ADD mqtt-exporter.py /
+# ADD mqtt-exporter.cfg /
 
 CMD [ "python", "mqtt-exporter.py" ]
